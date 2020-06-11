@@ -4,10 +4,10 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="xinabox-CORE",
-    version="0.0.1",
+    version="0.0.2",
     author="Luqmaan Baboo",
     author_email="luqmaanbaboo@gmail.com",
-    description="I2C Core for CC03/CS11/CW03, CW02, CW01 and Raspberry Pi",
+    description="I2C Core for CC03/CS11/CW03, CW02, CW01, Raspberry Pi and Microbit",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/xinabox/Python-CORE",

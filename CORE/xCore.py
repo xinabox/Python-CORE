@@ -1,5 +1,4 @@
 import sys
-import time
 
 def geti2c():
     if sys.platform == "linux":
@@ -23,6 +22,10 @@ def geti2c():
         import busio
         return busio.I2C(board.SCL, board.SDA)
 
+    elif sys.platform == "microbit":
+        from microbit import i2c
+        return i2c
+
 class xCore:
     def __init__(self):
         self.i2c=geti2c()
@@ -41,6 +44,8 @@ class xCore:
                 device.write(bytearray(args))
             finally:
                 self.i2c.unlock()
+        elif sys.platform == "microbit":
+            self.i2c.write(addr, bytearray(args))
 
     def write_read(self, addr, reg, length):
         if sys.platform == "linux":
@@ -61,6 +66,9 @@ class xCore:
             finally:
                 self.i2c.unlock()
             return buf
+        elif sys.platform == "microbit":
+            self.i2c.write(addr, bytearray([reg]))
+            return self.i2c.read(addr, length)
 
     def write(self):
         pass
@@ -69,4 +77,9 @@ class xCore:
         pass
 
     def sleep(time_):
-        time.sleep(time_/1000)
+        if sys.platform == "microbit":
+            import microbit
+            microbit.sleep(time_)
+        else:
+            import time
+            time.sleep(time_/1000)
