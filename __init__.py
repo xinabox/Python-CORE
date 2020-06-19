@@ -1,1 +1,1 @@
-from CORE.xCore import xCore
+from xCore import xCore
