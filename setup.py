@@ -7,9 +7,13 @@ install_requires = list()
 if sys.platform == "linux2" or sys.platform == "linux":
     install_requires = ["smbus2",]
 
+if sys.platform == "esp8266":
+    sys.path.pop(0)
+    sys.path.append("..")
+
 setuptools.setup(
     name="xinabox-CORE",
-    version="0.0.9",
+    version="0.0.10",
     author="Luqmaan Baboo",
     author_email="luqmaanbaboo@gmail.com",
     description="I2C Core for CC03/CS11/CW03, CW02, CW01, Raspberry Pi and Microbit",
