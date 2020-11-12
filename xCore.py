@@ -1,5 +1,6 @@
 import sys
 
+
 def geti2c():
     if sys.platform == "linux":
         import smbus2 as smbus
@@ -7,14 +8,14 @@ def geti2c():
 
     elif sys.platform == "esp8266":
         from machine import I2C, Pin
-        scl=14
-        sda=2
+        scl = 14
+        sda = 2
         return I2C(scl=Pin(scl), sda=Pin(sda), freq=100000)
 
     elif sys.platform == "esp32":
         from machine import I2C, Pin
-        scl=22
-        sda=21
+        scl = 22
+        sda = 21
         return I2C(scl=Pin(scl), sda=Pin(sda), freq=100000)
 
     elif sys.platform == "Atmel SAMD21":
@@ -26,13 +27,20 @@ def geti2c():
         from microbit import i2c
         return i2c
 
+
 class xCore:
     def __init__(self):
-        self.i2c=geti2c()
+        self.i2c = geti2c()
 
     def write_bytes(self, addr, *args):
         if sys.platform == "linux":
-            self.i2c.write_i2c_block_data(addr, args[0], args[1:len(args)])
+            print(len(args))
+            if len(args) > 1 and not isinstance(args[1], int):
+                print("if")
+                self.i2c.write_i2c_block_data(addr, args[0], args[1])
+            else:
+                print("else")
+                self.i2c.write_i2c_block_data(addr, args[0], args[1:len(args)])
         elif sys.platform == "esp8266" or sys.platform == "esp32":
             self.i2c.writeto(addr, bytes(args))
         elif sys.platform == "Atmel SAMD21":
@@ -69,6 +77,9 @@ class xCore:
         elif sys.platform == "microbit":
             self.i2c.write(addr, bytearray([reg]))
             return self.i2c.read(addr, length)
+
+    def send_byte(self, addr, byte):
+        self.i2c.write_byte(addr, byte)
 
     def write(self):
         pass

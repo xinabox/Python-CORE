@@ -13,7 +13,7 @@ if sys.platform == "esp8266":
 
 setuptools.setup(
     name="xinabox-CORE",
-    version="0.0.10",
+    version="0.0.11",
     author="Luqmaan Baboo",
     author_email="luqmaanbaboo@gmail.com",
     description="I2C Core for CC03/CS11/CW03, CW02, CW01, Raspberry Pi and Microbit",
